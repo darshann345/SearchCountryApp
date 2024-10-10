@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UseDebounch from "./UseDebouce";
+import UseDebounce from "./UseDebouce"; 
+
 const CountryCard = ({ name, flag }) => {
   return (
     <div
@@ -12,8 +13,6 @@ const CountryCard = ({ name, flag }) => {
         borderRadius: "8px",
         width: "200px",
         height: "200px",
-
-        
         margin: "10px",
         padding: "10px",
       }}
@@ -32,20 +31,25 @@ function SearchCountry() {
   const [countries, setCountries] = useState([]);
   const [searchCountry, setSearchCountry] = useState("");
   const [filterCountry, setFilterCountry] = useState([]);
-  const debouncedSearch = UseDebounch(searchCountry, 300);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+  const debouncedSearch = UseDebounce(searchCountry, 300);
 
   const API_URL = `https://restcountries.com/v3.1/all`;
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(API_URL);
         const data = response.data;
-        console.log(JSON.stringify(data, null, 2));
         setCountries(data);
-        setFilterCountry(data); 
+        setFilterCountry(data);
       } catch (error) {
         console.error("Error fetching data: ", error.message);
+        setError("Failed to load countries");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -62,7 +66,6 @@ function SearchCountry() {
       setFilterCountry(countries);
     }
   }, [debouncedSearch, countries]);
-  
 
   return (
     <>
@@ -91,18 +94,23 @@ function SearchCountry() {
         />
       </nav>
 
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-        {filterCountry.map((country) => (
-          <CountryCard
-            key={country.cca3} // Use cca3 as a unique key
-            name={country.name.common}
-            flag={country.flags.png}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <p>Loading countries...</p>
+      ) : error ? (
+        <p className="error">{error}</p>
+      ) : (
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+          {filterCountry.map((country) => (
+            <CountryCard
+              key={country.cca3} 
+              name={country.name.common}
+              flag={country.flags.png}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }
 
 export default SearchCountry;
-
