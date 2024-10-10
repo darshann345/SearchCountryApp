@@ -1,13 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import SearchCountry from './Components/SearchCountry';
-
+import SearchCountry from './Components/SearchCountry'
 function App() {
   return (
     <>
       <div>
         <SearchCountry/>
-        
       </div>
     </>
   );
