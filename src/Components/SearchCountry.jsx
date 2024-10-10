@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UseDebounce from "./UseDebouce"; 
+import UseDebounce from "./UseDebounce"; 
 
 const CountryCard = ({ name, flag }) => {
   return (
