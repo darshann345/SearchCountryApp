@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; 
+import './App.css'; // Make sure to create this CSS file for styling
+
 const App = () => {
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,6 +28,7 @@ const App = () => {
     setSearchTerm(event.target.value);
   };
 
+  // Ensure the filtering logic is correct
   const filteredCountries = countries.filter((country) =>
     country.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
