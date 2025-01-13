@@ -10,7 +10,8 @@ const CountryApp = () => {
     useEffect(() => {
       const fetchCountries = async () => {
         try {
-          const response = await fetch('https://restcountries.com/v3.1/all');
+          // const response = await fetch('https://restcountries.com/v3.1/all');
+            const response = await fetch(`https://xcountriesapi.onrender.com/all`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
