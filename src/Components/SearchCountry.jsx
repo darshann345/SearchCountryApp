@@ -33,7 +33,7 @@ const CountryApp = () => {
     };
   
     const filteredCountries = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+      country.data.common.toLowerCase().includes(searchTerm.toLowerCase())
     );
   
     return (
@@ -52,9 +52,9 @@ const CountryApp = () => {
           <div className="country-list">
             {filteredCountries.length > 0 ? (
               filteredCountries.map((country) => (
-                <div className="countryCard" key={country.cca3}>
-                  <img src={country.flags.png} alt={`${country.name.common} flag`} />
-                  <h2>{country.name.common}</h2>
+                <div className="countryCard" key={country.abbr}>
+                  <img src={country.flags} alt={`${country.name} flag`} />
+                  <h2>{country.name}</h2>
                   <p>Capital: {country.capital?.[0] || 'N/A'}</p>
                   <span>Region: {country.region}</span>
                 </div>
